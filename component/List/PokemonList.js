@@ -8,7 +8,9 @@ import {
     TouchableOpacity,
     StyleSheet,
     TextInput,
+    ActivityIndicator
   } from 'react-native';
+import Pagination from '../Feature/Pagination';
 import { Card, Button } from '@rneui/themed';
 import {useQuery} from 'react-query'
 import axios from 'axios'
@@ -18,15 +20,41 @@ import axios from 'axios'
 export default function PokemonList(props) {
     const [pokemons, setPokemons] = useState([]);
     const [searchfeild, setSearchfeild] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [currentPageUrl, setCurrentPageUrl] = useState(
+      "https://pokeapi.co/api/v2/pokemon"
+    );
+    const [nextPageUrl, setNextPageUrl] = useState();
+    const [prevPageUrl, setPrevPageUrl] = useState();
        
     useEffect(() => {
-        FetchPokemon();
-}, []);
+      setLoading(true);
+      let cancel;
+      axios
+        .get(currentPageUrl, {
+          cancelToken: new axios.CancelToken(c => (cancel = c))
+        })
+        .then(res => {
+          setLoading(false);
+          setNextPageUrl(res.data.next);
+          setPrevPageUrl(res.data.previous);
+          setPokemons(res.data.results.map(p => p));
+        });
+        console.log("pokemon", pokemons)
+  
+      return () => cancel();
+    }, [currentPageUrl]);
 
-const FetchPokemon = () =>{
-   axios.get('https://pokeapi.co/api/v2/pokemon?limit=100')
-  .then(data => setPokemons(data.data.results))
-}
+    function gotoNextPage() {
+      setCurrentPageUrl(nextPageUrl);
+    }
+  
+    function gotoPrevPage() {
+      setCurrentPageUrl(prevPageUrl);
+    }
+  
+    if (loading) return <Text>loading</Text>
+
 
 
 return (
@@ -71,6 +99,10 @@ return (
                 </TouchableOpacity>
               );
             }) : <Card><Card.Title>No More Pokemons in here!</Card.Title></Card>}
+            <Pagination
+        gotoNextPage={nextPageUrl ? gotoNextPage : null}
+        gotoPrevPage={prevPageUrl ? gotoPrevPage : null}
+      />
         </View>
       </ScrollView>
     </View>
