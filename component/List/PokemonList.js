@@ -53,7 +53,11 @@ export default function PokemonList(props) {
       setCurrentPageUrl(prevPageUrl);
     }
   
-    if (loading) return <Text>loading</Text>
+    if (loading){
+      return (<View style={styles.container}>
+        <ActivityIndicator size="large" color="#00ff00" />
+      </View>)
+    } 
 
 
 
