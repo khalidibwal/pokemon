@@ -16,22 +16,18 @@ import axios from 'axios'
 
 
 export default function PokemonList(props) {
-    // const [pokemons, setPokemons] = useState([]);
+    const [pokemons, setPokemons] = useState([]);
     const [searchfeild, setSearchfeild] = useState('');
-    
-    const FetchPokemon = async () =>{
-        const {data} = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=100')
-        return data;
-    }
-    
+       
     useEffect(() => {
         FetchPokemon();
 }, []);
-  const {data, error, isError } = useQuery('posts', FetchPokemon)
 
-if(isError){
-    return <Text>Error! {error.message}</Text>
+const FetchPokemon = () =>{
+   axios.get('https://pokeapi.co/api/v2/pokemon?limit=100')
+  .then(data => setPokemons(data.data.results))
 }
+
 
 return (
     <View>
@@ -45,7 +41,7 @@ return (
       </View>
       <ScrollView>
         <View style={styles.container}>
-          {data.results
+          {pokemons? pokemons
             .filter(pokemon =>
               pokemon.name.toLowerCase().includes(searchfeild.toLowerCase())
             )
@@ -74,7 +70,7 @@ return (
                   </Card>
                 </TouchableOpacity>
               );
-            })}
+            }) : <Card><Card.Title>No More Pokemons in here!</Card.Title></Card>}
         </View>
       </ScrollView>
     </View>
