@@ -31,6 +31,9 @@ const PokemonDetail = props => {
       <Text style={styles.text}>
         Ability: {details.abilities[0].ability.name}
       </Text>
+      <Text style={styles.text}>
+        Moves: {details.moves[0].move.name}
+      </Text>
       <Text style={styles.text}>Type: {details.types[0].type.name}</Text>
     </View>
   ) : (

@@ -4,8 +4,12 @@ import {View, Text, Button, StyleSheet, TouchableOpacity} from 'react-native'
 export default function Pagination({ gotoNextPage, gotoPrevPage }) {
   return (
     <View style={Styles.btnStyle}>
-      {gotoPrevPage && <TouchableOpacity style={Styles.appButtonContainer}  onPress={gotoPrevPage}><Text style={Styles.appButtonText}>Previous Page</Text></TouchableOpacity>}
-      {gotoNextPage && <TouchableOpacity style={Styles.appButtonContainer} onPress={gotoNextPage}><Text style={Styles.appButtonText}>Next Page</Text></TouchableOpacity>}
+      {gotoPrevPage && <TouchableOpacity style={Styles.appButtonContainer}  
+      onPress={gotoPrevPage}><Text style={Styles.appButtonText}>Previous Page</Text>
+      </TouchableOpacity>}
+      {gotoNextPage && <TouchableOpacity style={Styles.appButtonContainer} 
+      onPress={gotoNextPage}><Text style={Styles.appButtonText}>Next Page</Text>
+      </TouchableOpacity>}
     </View>
   );
 }
