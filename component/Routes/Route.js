@@ -25,7 +25,8 @@ function Home() {
         },
         tabBarLabel:() => {
           return (<Text>HOME</Text>)
-        }
+        },
+        title:'Home'
       }}/>
       <Tab.Screen name="poke" component={PokeDex}
       options={{
@@ -36,7 +37,8 @@ function Home() {
         },
         tabBarLabel:() => {
           return (<Text style={{color:'black'}}>POKEBAG</Text>)
-        }
+        },
+        title:'Pokebag'
       }}/>
     </Tab.Navigator>
   );
@@ -45,7 +47,7 @@ function Route() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home" component={Home} options={{headerShown:false}} />
         <Stack.Screen name="Details" component={PokemonDetail} />
       </Stack.Navigator>
     </NavigationContainer>
