@@ -26,7 +26,7 @@ function Home() {
         tabBarLabel:() => {
           return (<Text>HOME</Text>)
         },
-        title:'Home'
+        headerShown:false
       }}/>
       <Tab.Screen name="poke" component={PokeDex}
       options={{
